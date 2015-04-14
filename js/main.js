@@ -3,7 +3,7 @@ requirejs.config({
 
   paths: {
     "jquery": "libs/jquery",
-    "bootstrap": "libs/bootstrap/js/bootstrap.min",      
+    "bootstrap": "libs/bootstrap/js/bootstrap",      
     "underscore": "libs/underscore",
     "backbone": "libs/backbone"
   },
@@ -18,15 +18,10 @@ requirejs.config({
     },
     'bootstrap' : { 
       deps : ['jquery']
-    },
-    'app': {
-      deps: ['underscore', 'backbone']
     }
   }
 });
 
-require(['app'],
-
-function(App) {
-  window.restauApp = new App();
+require(['views/app'], function(AppView) {
+  new AppView();
 });

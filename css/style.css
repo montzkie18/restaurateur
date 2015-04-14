@@ -1,0 +1,22 @@
+html, 
+body, 
+      
+#map-canvas { 
+	height: 100%; 
+	margin: 0; 
+	padding: 0;
+}
+      
+#control-group { 
+	position: absolute; 
+	top: 10px; 
+	left: 10px; 
+	z-index: 1; 
+}
+      
+#restaurants-list { 
+	position: absolute; 
+	top: 50px; 
+	left: 10px; 
+	z-index: 1; 
+}
