@@ -3,8 +3,9 @@ define([
 	'underscore',
 	'backbone',
 	'bootstrap',
+	'collections/restaurants',
 	'views/map'
-], function($, _, Backbone, Bootstrap, MapView) {
+], function($, _, Backbone, Bootstrap, RestaurantList, MapView) {
 
 	var AppView = Backbone.View.extend({
 
@@ -13,50 +14,56 @@ define([
 		el : '#control-group',
 
 		events : {
-			'click #add-restau' : 'toggleDropMarker',
-			'click #pop-restau' : 'popMarker'		},
+			'click #add-restau' : 'toggleEntryMode'
+		},
 
 		initialize : function() {
+			this.restaurants = new RestaurantList();
+
 			this.children = {
-				mapView : new MapView()
+				mapView : new MapView({ collection : this.restaurants })
 			};
-			this.children.mapView.initialize();
+			this.addListeners();
+
+			this.restaurants.fetch();
+		},
+
+		addListeners : function() {
 			_.bindAll(this, 'onKeyUp');
-		},
-
-		addKeyListener : function() {
 			$(document).bind('keyup', this.onKeyUp);
-		},
 
-		removeKeyListener : function() {
-			$(document).unbind('keyup', this.onKeyUp);
+			var appView = this;
+			this.listenTo(this.children.mapView, 'cancelEntry', function() {
+				appView.setEntryMode(false);
+			});
 		},
 
 		onKeyUp : function(event) {
-			if(event.keyCode == 27)
-				this.endDropMarker();
-		},
-
-		toggleDropMarker : function() {
-			this.children.mapView.toggleDropMarker();
-			this.$('#add-restau').button('toggle');
-			if(this.$('#add-restau').hasClass('active')) {
-				this.addKeyListener();
-				this.$('#add-restau span').text('Adding');
-			} else {
-				this.removeKeyListener();
-				this.$('#add-restau span').text('Add Restaurant');
+			if(event.keyCode == 27) {
+				event.stopPropagation();
+				this.endEntryMode();
 			}
 		},
 
-		endDropMarker : function() {
-			if(this.children.mapView.isAdding)
-				this.toggleDropMarker();
+		setEntryMode : function(active) {
+			this.children.mapView.setEntryMode(active);
+			
+			if(this.children.mapView.isAdding) {
+				$('#add-restau').addClass('active');
+				$('#add-restau span').text('Adding');
+			} else {
+				$('#add-restau').removeClass('active');
+				$('#add-restau span').text('Add Restaurant');
+			}
 		},
 
-		popMarker : function() {
-			this.endDropMarker();
-			this.children.mapView.popMarker();
+		toggleEntryMode : function() {
+			this.setEntryMode(!this.children.mapView.isAdding);
+		},
+
+		endEntryMode : function() {
+			if(this.children.mapView.isAdding)
+				this.toggleEntryMode();
 		}
 	});
 

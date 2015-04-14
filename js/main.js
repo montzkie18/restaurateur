@@ -5,7 +5,8 @@ requirejs.config({
     "jquery": "libs/jquery",
     "bootstrap": "libs/bootstrap/js/bootstrap",      
     "underscore": "libs/underscore",
-    "backbone": "libs/backbone"
+    "backbone": "libs/backbone",
+    "localstorage": "libs/backbone.localStorage"
   },
 
   shim: {
