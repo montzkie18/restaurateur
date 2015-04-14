@@ -17,5 +17,7 @@ define(['backbone'], function(Backbone){
 
 	});
 
+	Restaurant.TYPES = ["American", "Italian", "French", "Japanese", "Thai", "Chinese", "Burritos", "Burgers", "Sushi", "Pizza", "Bread", "Pasta"];
+
 	return Restaurant;
 });

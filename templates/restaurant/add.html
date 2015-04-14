@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <td>Restaurant Name: </td>
+    <td><input id='entry-name' type='text'></input></td>
+  </tr>
+  <tr>
+    <td>Main Cuisine: </td>
+    <td>
+      <select id='entry-type'>
+        <% _.each(types, function(type){ %>
+        <option value='<%= type %>'><%= type %></option>
+        <% }); %>
+      </select>
+    </td>
+  </tr>
+</table>
+<button id='create-restau' type='submit'>Add</button>

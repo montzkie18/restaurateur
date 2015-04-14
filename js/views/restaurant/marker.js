@@ -1,8 +1,9 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone'
-], function($, _, Backbone) {
+	'backbone',
+	'utils'
+], function($, _, Backbone, Utils) {
 
 	var placeholderTemplateFixed = '<div class="restaurant-marker"><h4><%= name %> <button id="delete-restau-<%= cid %>" class="btn btn-xs" type="button"> <span class="glyphicon glyphicon-trash"></span> </button> </h4> <br/><%= type %> <br/>Customers: <%= customers %> <button id="edit-customers-<%= cid %>" class="btn btn-xs" type="button"> <span class="glyphicon glyphicon-pencil"></span> </button></div>';
 	var placeholderTemplateEdit = '<div class="restaurant-marker"><h4><%= name %> <button id="delete-restau-<%= cid %>" class="btn btn-xs" type="button"> <span class="glyphicon glyphicon-trash"></span> </button> </h4> <br/><%= type %> <br/>Customers: <input id="num-customers-<%= cid %>" type="text" value="<%= customers %>" /></div>';
@@ -87,7 +88,7 @@ define([
 		},
 
 		showInfoWindow : function() {
-			this.info.setContent(this.render().html());
+			this.info.setContent(Utils.html(this.render().el));
 			this.info.open(this.map, this.marker);
 		},
 
@@ -97,12 +98,12 @@ define([
 
 		startEditModeMarker : function() {
 			this.isEditing = true;
-			this.info.setContent(this.render().html());
+			this.info.setContent(Utils.html(this.render().el));
 		},
 
 		stopEditModeMarker : function() {
 			this.isEditing = false;
-			this.info.setContent(this.render().html());
+			this.info.setContent(Utils.html(this.render().el));
 		},
 
 		onKeyDownMarker : function(e) {
@@ -118,12 +119,6 @@ define([
 
 		deleteEntryMarker : function() {
 			this.restaurant.destroy();
-		},
-
-		html : function() {
-			var tmp = document.createElement("div");
-			tmp.appendChild(this.el);
-			return tmp.innerHTML;
 		},
 
 		close : function() {

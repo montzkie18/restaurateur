@@ -29,12 +29,9 @@ define([
 			this.listenTo(this.collection, "reset", this.addAllMarkers);
 			this.listenTo(this.collection, "remove", this.removeMarker);
 			this.listenTo(this.collection, "destroy", this.removeMarker);
+			this.listenTo(this.collection, "filter", this.filterMarkers)
 
 			_.extend(this, Backbone.Events);
-		},
-
-		addAllMarkers : function() {
-			this.collection.each(this.addMarker, this);
 		},
 
 		addMarker : function(restaurant) {
@@ -49,6 +46,23 @@ define([
 				this.markers.splice(this.markers.indexOf(marker), 1);
 	    		marker.close();
 	    	}
+	    },
+
+	    clearMarkers : function() {
+	    	_.each(this.markers, function(marker){ marker.close(); });
+	    	this.markers = [];
+	    },
+
+	    addAllMarkers : function() {
+	    	this.clearMarkers();
+			this.collection.each(this.addMarker, this);
+		},
+
+	    filterMarkers : function(filteredType) {
+	    	this.clearMarkers();
+	    	var mapView = this;
+	    	var filteredList = this.collection.getAllType(filteredType);
+	    	_.each(filteredList, this.addMarker, this);
 	    },
 
 		setEntryMode : function(active) {

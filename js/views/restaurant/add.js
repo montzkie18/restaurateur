@@ -1,17 +1,25 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone'
-], function($, _, Backbone){
-
-	var placeholderTemplate = "Restaurant Name: <input id='entry-name' type='text'></input><br/><br/>Main Cuisine: <input id='entry-type' type='text'></input><br/><br/><button id='create-restau' type='submit'>Add</button>";
+	'backbone',
+	'utils',
+	'models/restaurant',
+	'text!templates/restaurant/add.html'
+], function($, _, Backbone, Utils, Restaurant, addRestaurantTemplate){
 
 	var AddView = Backbone.View.extend({
+
+		template : _.template(addRestaurantTemplate),
 
 		className : 'addRestaurant',
 
 		initialize : function() {
 			_.extend(this, Backbone.Events);
+		},
+
+		render : function() {
+			this.$el.html(this.template({types : Restaurant.TYPES}));
+			return this;
 		},
 
 		open : function(map, location) {
@@ -23,7 +31,7 @@ define([
 				});
 
 				this.popup = new google.maps.InfoWindow({
-					content : placeholderTemplate
+					content : Utils.html(this.render().el)
 				});
 				
 				this.addPopupListeners();

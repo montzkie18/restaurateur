@@ -1,0 +1,9 @@
+<div>Show : 
+	<select id="filter-type">
+		<option value="All">All</option>
+		<option disabled="disabled">----</option>
+		<% _.each(types, function(type) { %>
+		<option value="<%= type %>"><%= type %></option>
+		<% }); %>
+	</select>
+</div>

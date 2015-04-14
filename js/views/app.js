@@ -4,14 +4,18 @@ define([
 	'backbone',
 	'bootstrap',
 	'collections/restaurants',
-	'views/map'
-], function($, _, Backbone, Bootstrap, RestaurantList, MapView) {
+	'models/restaurant',
+	'views/map',
+	'text!templates/app.html'
+], function($, _, Backbone, Bootstrap, RestaurantList, Restaurant, MapView, appControlsTemplate) {
 
 	var AppView = Backbone.View.extend({
 
 		className : "appView",
 
 		el : '#control-group',
+
+		template : _.template(appControlsTemplate),
 
 		events : {
 			'click #add-restau' : 'toggleEntryMode'
@@ -23,9 +27,14 @@ define([
 			this.children = {
 				mapView : new MapView({ collection : this.restaurants })
 			};
+			this.render();
 			this.addListeners();
 
 			this.restaurants.fetch();
+		},
+
+		render : function() {
+			this.$el.append(this.template({types: Restaurant.TYPES}));
 		},
 
 		addListeners : function() {
@@ -35,6 +44,10 @@ define([
 			var appView = this;
 			this.listenTo(this.children.mapView, 'cancelEntry', function() {
 				appView.setEntryMode(false);
+			});
+
+			$('#filter-type').change(function(){
+				appView.filterMarkers($('#filter-type').val());
 			});
 		},
 
@@ -64,6 +77,10 @@ define([
 		endEntryMode : function() {
 			if(this.children.mapView.isAdding)
 				this.toggleEntryMode();
+		},
+
+		filterMarkers : function(type) {
+			this.restaurants.filterByType(type);
 		}
 	});
 
