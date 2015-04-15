@@ -5,24 +5,16 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="js/libs/bootstrap/css/bootstrap.min.css">
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script data-main="js/main" src="js/libs/require.js"></script>
-    
-    
   </head>
   <body>
     <div id="map-canvas"></div>
     <div id="control-group">
-      <button id="add-restau" type="button" class="btn btn-primary"><span>Add Restaurant</span></button><br/>
+      <button id="drop-pin" type="button" class="btn btn-primary"><span>Drop Pin</span></button>
+      <button id="add-restau" type="button" class="btn btn-primary"><span>Add Restaurant</span></button>
+      <button id="clear-restau" type="button" class="btn btn-primary"><span>Clear All Added</span></button><br/><br/>
+      <span>Radius : </span><input id="search-radius" type="text" value="1000"/>
     </div>
-    <!--<div id="restaurants-list">
-      <div class="list-group">
-        <a href="#" class="list-group-item active">Cras justo odio</a>
-        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item">Morbi leo risus</a>
-        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item">Vestibulum at eros</a>
-      </div>
-    </div>-->
   </body>
 </html>

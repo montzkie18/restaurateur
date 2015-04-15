@@ -26,8 +26,8 @@ define([
 			if(this.marker == null && this.popup == null) {
 				this.marker = new google.maps.Marker({
 					position: location,
-		            map: map,
-		            animation: google.maps.Animation.DROP
+					map: map,
+					animation: google.maps.Animation.DROP
 				});
 
 				this.popup = new google.maps.InfoWindow({

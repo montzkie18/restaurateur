@@ -1,6 +1,6 @@
 define(['backbone', 'localstorage', 'models/restaurant'], function(Backbone, LocalStorage, Restaurant){
 
-	var RestaurantList = Backbone.Collection.extend({
+	var Restaurants = Backbone.Collection.extend({
 		url : 'restaurants',
 		model : Restaurant,
 		localStorage : new LocalStorage('restaurants'),
@@ -17,6 +17,6 @@ define(['backbone', 'localstorage', 'models/restaurant'], function(Backbone, Loc
 		}
 	});
 
-	return RestaurantList;
+	return Restaurants;
 
 });

@@ -7,7 +7,8 @@ requirejs.config({
     "underscore": "libs/underscore",
     "backbone": "libs/backbone",
     "localstorage": "libs/backbone.localStorage",
-    "templates": "../templates"
+    "templates": "../templates",
+    "shifty": "libs/shifty.min"
   },
 
   shim: {
