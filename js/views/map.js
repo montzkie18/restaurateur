@@ -35,35 +35,35 @@ define([
 		},
 
 		addMarker : function(restaurant) {
-	        var marker = new RestaurantMarker(this.map, restaurant); 
-	        this.markers.push(marker);
-	        return marker;
-	    },
+		    var marker = new RestaurantMarker(this.map, restaurant); 
+		    this.markers.push(marker);
+		    return marker;
+		},
 
-	    removeMarker : function(restaurant) {
-	    	var marker = _.findWhere(this.markers, {restaurant : restaurant});
-	    	if(marker) {
+		removeMarker : function(restaurant) {
+			var marker = _.findWhere(this.markers, {restaurant : restaurant});
+			if(marker) {
 				this.markers.splice(this.markers.indexOf(marker), 1);
-	    		marker.close();
-	    	}
-	    },
+				marker.close();
+			}
+		},
 
-	    clearMarkers : function() {
-	    	_.each(this.markers, function(marker){ marker.close(); });
-	    	this.markers = [];
-	    },
+		clearMarkers : function() {
+			_.each(this.markers, function(marker){ marker.close(); });
+			this.markers = [];
+		},
 
-	    addAllMarkers : function() {
-	    	this.clearMarkers();
+		addAllMarkers : function() {
+			this.clearMarkers();
 			this.collection.each(this.addMarker, this);
 		},
 
-	    filterMarkers : function(filteredType) {
-	    	this.clearMarkers();
-	    	var mapView = this;
-	    	var filteredList = this.collection.getAllType(filteredType);
-	    	_.each(filteredList, this.addMarker, this);
-	    },
+		filterMarkers : function(filteredType) {
+			this.clearMarkers();
+			var mapView = this;
+			var filteredList = this.collection.getAllType(filteredType);
+			_.each(filteredList, this.addMarker, this);
+		},
 
 		setEntryMode : function(active) {
 			this.isAdding = active;
