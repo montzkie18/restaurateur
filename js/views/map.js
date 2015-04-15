@@ -25,6 +25,7 @@ define([
 
 		addMarker : function(model) {
 		    var marker = new this.markerClass(this.map, model); 
+		    marker.setupListeners();
 		    this.markers.push(marker);
 		    return marker;
 		},

@@ -14,6 +14,7 @@ define([
 		constructor : function(map, model) {
 			this.map = map;
 			this.model = model;
+			this.info = RestaurantMarker.info;
 			Backbone.View.apply(this, arguments);
 		},
 
@@ -23,7 +24,10 @@ define([
 				map: this.map,
 				animation: google.maps.Animation.DROP
 	        });
-	        this.addMarkerClickListeners();
+		},
+
+		setupListeners : function() {
+			this.addMarkerClickListeners();
 	        this.addMarkerHoverListeners();
 	        this.addInfoListeners();
 		},
@@ -36,7 +40,7 @@ define([
 		addMarkerClickListeners : function() {
 			var restaurantMarker = this;
 			google.maps.event.addListener(this.marker, 'click', function(event) {
-				if(_.isEmpty(RestaurantMarker.info.getContent()))
+				if(_.isEmpty(restaurantMarker.info.getContent()))
 					restaurantMarker.showInfoWindow();
 				restaurantMarker.map.setCenter(restaurantMarker.marker.getPosition());
 				restaurantMarker.removeMarkerHoverListners();
@@ -60,19 +64,19 @@ define([
 
 		addInfoListeners : function() {
 			var restaurantMarker = this; // pass this reference to closures below
-			google.maps.event.addListener(RestaurantMarker.info, 'closeclick', function() {
+			google.maps.event.addListener(this.info, 'closeclick', function() {
 				// after being closed, enable opening on mouseover and mouseout again
 				restaurantMarker.addMarkerHoverListeners();
 			});
 		},
 
 		showInfoWindow : function() {
-			RestaurantMarker.info.setContent(Utils.html(this.render().el));
-			RestaurantMarker.info.open(this.map, this.marker);
+			this.info.setContent(Utils.html(this.render().el));
+			this.info.open(this.map, this.marker);
 		},
 
 		hideInfoWindow : function() {
-			RestaurantMarker.info.close();
+			this.info.close();
 		},
 
 		close : function() {

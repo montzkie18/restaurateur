@@ -47,7 +47,7 @@ define([
 
 			this.render();
 			this.addListeners();
-
+			
 			this.places.fetch({location: this.map.getCenter(), types : ['restaurant', 'food']});
 			this.restaurants.fetch();
 		},
@@ -83,7 +83,9 @@ define([
 		},
 
 		clearLocalRestaurants : function() {
-			this.restaurants.reset();
+			_.chain(this.restaurants.models).clone().each(function(model){
+				model.destroy();
+			});
 		},
 
 		setEntryMode : function(active) {
